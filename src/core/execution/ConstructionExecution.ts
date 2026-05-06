@@ -3,11 +3,15 @@ import { TileRef } from "../game/GameMap";
 import { BunkerExecution } from "./BunkerExecution";
 import { CityExecution } from "./CityExecution";
 import { DefensePostExecution } from "./DefensePostExecution";
+import { EMPLauncherExecution } from "./EMPLauncherExecution";
 import { FactoryExecution } from "./FactoryExecution";
+import { FragBombExecution } from "./FragBombExecution";
+import { ImpulseBombExecution } from "./ImpulseBombExecution";
 import { MineExtractorExecution } from "./MineExtractorExecution";
 import { MirvExecution } from "./MIRVExecution";
 import { MissileSiloExecution } from "./MissileSiloExecution";
 import { NukeExecution } from "./NukeExecution";
+import { OrbitalLaserExecution } from "./OrbitalLaserExecution";
 import { PortExecution } from "./PortExecution";
 import { RadarExecution } from "./RadarExecution";
 import { SAMLauncherExecution } from "./SAMLauncherExecution";
@@ -18,6 +22,7 @@ import { CarrierShipExecution } from "./CarrierShipExecution";
 import { TurretAntiInfExecution } from "./TurretAntiInfExecution";
 import { TurretAntiNavalExecution } from "./TurretAntiNavalExecution";
 import { WarshipExecution } from "./WarshipExecution";
+import { CruiseMissileExecution } from "./CruiseMissileExecution";
 import { TankExecution } from "./TankExecution";
 import { ArtilleryExecution } from "./ArtilleryExecution";
 import { AttackDroneExecution } from "./AttackDroneExecution";
@@ -192,6 +197,23 @@ export class ConstructionExecution implements Execution {
       case UnitType.AttackDrone:
         this.mg.addExecution(new AttackDroneExecution(this.structure!));
         break;
+      case UnitType.EMPLauncher:
+        this.mg.addExecution(new EMPLauncherExecution(this.structure!));
+        break;
+      case UnitType.CruiseMissile:
+        this.mg.addExecution(
+          new CruiseMissileExecution(player, this.tile),
+        );
+        break;
+      case UnitType.FragBomb:
+        this.mg.addExecution(new FragBombExecution(player, this.tile));
+        break;
+      case UnitType.ImpulseBomb:
+        this.mg.addExecution(new ImpulseBombExecution(player, this.tile));
+        break;
+      case UnitType.OrbitalLaser:
+        this.mg.addExecution(new OrbitalLaserExecution(player, this.tile));
+        break;
       default:
         console.warn(
           `unit type ${this.constructionType} cannot be constructed`,
@@ -220,6 +242,7 @@ export class ConstructionExecution implements Execution {
       case UnitType.Destroyer:
       case UnitType.CarrierShip:
       case UnitType.Radar:
+      case UnitType.EMPLauncher:
         return true;
       default:
         return false;

@@ -633,30 +633,35 @@ export class DefaultConfig implements Config {
         info = {
           cost: this.costWrapper(() => 3_000_000, UnitType.EMPLauncher),
           constructionDuration: this.instantBuild() ? 0 : 15 * 10,
+          maxHealth: 600,
         };
         break;
       case UnitType.CruiseMissile:
         info = {
           cost: this.costWrapper(() => 1_500_000, UnitType.CruiseMissile),
           constructionDuration: this.instantBuild() ? 0 : 10 * 10,
+          damage: 600,
         };
         break;
       case UnitType.FragBomb:
         info = {
           cost: this.costWrapper(() => 2_000_000, UnitType.FragBomb),
           constructionDuration: this.instantBuild() ? 0 : 12 * 10,
+          damage: 400,
         };
         break;
       case UnitType.ImpulseBomb:
         info = {
           cost: this.costWrapper(() => 2_500_000, UnitType.ImpulseBomb),
           constructionDuration: this.instantBuild() ? 0 : 12 * 10,
+          damage: 350,
         };
         break;
       case UnitType.OrbitalLaser:
         info = {
           cost: this.costWrapper(() => 10_000_000, UnitType.OrbitalLaser),
           constructionDuration: this.instantBuild() ? 0 : 20 * 10,
+          damage: 1200,
         };
         break;
       default:
@@ -1199,5 +1204,13 @@ export class DefaultConfig implements Config {
 
   allianceExtensionPromptOffset(): number {
     return 300; // 30 seconds before expiration
+  }
+
+  radarScanInterval(): number {
+    return 120; // Scan every 120 ticks (~2 seconds at 60fps)
+  }
+
+  radarDetectionRange(): number {
+    return 10; // Detect submarines within 10 tiles
   }
 }

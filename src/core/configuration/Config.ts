@@ -183,6 +183,8 @@ export interface Config {
   structureMinDist(): number;
   isReplay(): boolean;
   allianceExtensionPromptOffset(): number;
+  radarScanInterval(): number;
+  radarDetectionRange(): number;
 }
 
 export interface Theme {

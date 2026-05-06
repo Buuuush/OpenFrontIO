@@ -64,6 +64,7 @@ export class CarrierShipExecution implements Execution {
   }
 
   private launchDrone(): void {
+    if (this.mg === null) return;
     // Find a valid spawn tile near the carrier
     const spawnTile = this.carrier.owner().canBuild(UnitType.AttackDrone, this.carrier.tile());
 
