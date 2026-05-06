@@ -1,8 +1,5 @@
 import { Execution, Game, Player, UnitType } from "../game/Game";
 import { TileRef } from "../game/GameMap";
-import { PathFinding } from "../pathfinding/PathFinder";
-import { PathStatus, SteppingPathFinder } from "../pathfinding/types";
-import { ShellExecution } from "./ShellExecution";
 
 /**
  * CruiseMissileExecution: Guided missile that travels to a target tile and explodes.
@@ -11,8 +8,6 @@ import { ShellExecution } from "./ShellExecution";
 export class CruiseMissileExecution implements Execution {
   private active = true;
   private mg: Game | null = null;
-  private pathFinder: SteppingPathFinder<TileRef> | null = null;
-  private travelSpeed = 5; // Tiles moved per tick
 
   constructor(
     private player: Player,
@@ -21,15 +16,12 @@ export class CruiseMissileExecution implements Execution {
 
   init(mg: Game, ticks: number): void {
     this.mg = mg;
-    this.pathFinder = PathFinding.Air(mg);
   }
 
   tick(ticks: number): void {
-    if (!this.active || this.mg === null || this.pathFinder === null) return;
+    if (!this.active || this.mg === null) return;
 
-    // Find the player's capital or a territory tile to launch from
-    const launchTile = this.player.spawnTile();
-    if (launchTile === undefined || !this.player.isAlive()) {
+    if (!this.player.isAlive()) {
       this.active = false;
       return;
     }
