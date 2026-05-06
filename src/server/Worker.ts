@@ -40,6 +40,8 @@ const workerId = parseInt(process.env.WORKER_ID ?? "0");
 const log = logger.child({ comp: `w_${workerId}` });
 const playlist = new MapPlaylist();
 
+const TURNSTILE_ENABLED = true;
+
 // Worker setup
 export async function startWorker() {
   log.info(`Worker starting...`);
@@ -428,11 +430,14 @@ export async function startWorker() {
           return;
         }
 
-        if (config.env() !== GameEnv.Dev) {
+        // TEMPORARY: Turnstile validation disabled while we diagnose
+        // intermittent invalid-input-response rejections in v31.
+        // Re-enable by flipping TURNSTILE_ENABLED back to true.
+        if (TURNSTILE_ENABLED && config.env() !== GameEnv.Dev) {
           const turnstileResult = await verifyTurnstileToken(
             ip,
             clientMsg.turnstileToken,
-            config,
+            config.turnstileSecretKey(),
           );
           switch (turnstileResult.status) {
             case "approved":

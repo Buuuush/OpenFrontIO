@@ -409,7 +409,6 @@
     "giantworldmap": "Giant World Map",
     "europe": "Europe",
     "mena": "MENA",
-    "middleeast": "Middle East",
     "northamerica": "North America",
     "oceania": "Oceania",
     "blacksea": "Black Sea",
@@ -660,7 +659,12 @@
     "atom_bomb": "Atom Bomb",
     "hydrogen_bomb": "Hydrogen Bomb",
     "mirv": "MIRV",
-    "factory": "Factory"
+    "factory": "Factory",
+    "bunker": "Bunker",
+    "turret_anti_inf": "Anti-Infantry Turret",
+    "turret_anti_naval": "Anti-Naval Turret",
+    "mine_extractor": "Mine Extractor",
+    "strat_port": "Strategic Port"
   },
   "user_setting": {
     "title": "Settings",
@@ -687,9 +691,9 @@
     "left_click_label": "Left Click to Open Menu",
     "left_click_desc": "When ON, left-click opens menu and sword button attacks. When OFF, left-click attacks directly.",
     "left_click_menu": "Left Click Menu",
-    "attack_ratio_label": "Attack Ratio",
+    "attack_ratio_label": "⚔️ Attack Ratio",
     "attack_ratio_desc": "What percentage of your troops to send in an attack (1–100%)",
-    "territory_patterns_label": "Territory Skins",
+    "territory_patterns_label": "🏳️ Territory Skins",
     "territory_patterns_desc": "Choose whether to display territory skin designs in game",
     "coordinate_grid_label": "Coordinate Grid",
     "coordinate_grid_desc": "Toggle the alphanumeric grid overlay",
@@ -883,7 +887,12 @@
       "port": "Sends trade ships to generate gold",
       "defense_post": "Increases defenses of nearby borders",
       "city": "Increases max population",
-      "factory": "Creates railroads and spawns trains"
+      "factory": "Creates railroads and spawns trains",
+      "bunker": "Defensive fortification protecting territory",
+      "turret_anti_inf": "Defends against land-based enemy units",
+      "turret_anti_naval": "Defends against enemy ships",
+      "mine_extractor": "Generates gold passively over time",
+      "strat_port": "Strategic trading hub for naval commerce"
     },
     "warship_shift_hint": "Hold Shift and drag to select multiple warships at once",
     "not_enough_money": "Not enough money"

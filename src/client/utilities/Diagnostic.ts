@@ -63,9 +63,10 @@ export async function collectGraphicsDiagnostics(
 
   /* ---------- Rendering ---------- */
 
+  let gl: WebGLRenderingContext | WebGL2RenderingContext | null = null;
   let type: RendererType = "Canvas2D";
 
-  const gl =
+  gl =
     canvas.getContext("webgl2", { antialias: true }) ??
     canvas.getContext("webgl", { antialias: true });
 
@@ -110,7 +111,7 @@ export async function collectGraphicsDiagnostics(
 
   /* ---------- Power ---------- */
 
-  let power: PowerInfo;
+  let power: PowerInfo = {};
 
   if ("getBattery" in navigator) {
     try {

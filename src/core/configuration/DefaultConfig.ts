@@ -43,6 +43,9 @@ const JwksSchema = z.object({
 });
 
 export abstract class DefaultServerConfig implements ServerConfig {
+  turnstileSecretKey(): string {
+    return Env.TURNSTILE_SECRET_KEY ?? "";
+  }
   abstract turnstileSiteKey(): string;
   allowedFlares(): string[] | undefined {
     return;
@@ -470,6 +473,192 @@ export class DefaultConfig implements Config {
           cost: () => 0n,
         };
         break;
+      // Phase 1: Structures defensives
+      case UnitType.Bunker:
+        info = {
+          cost: this.costWrapper(
+            (numUnits: number) => Math.min(200_000, (numUnits + 1) * 40_000),
+            UnitType.Bunker,
+          ),
+          constructionDuration: this.instantBuild() ? 0 : 3 * 10,
+          maxHealth: 1500,
+        };
+        break;
+      case UnitType.TurretAntiInf:
+        info = {
+          cost: this.costWrapper(
+            (numUnits: number) => Math.min(150_000, (numUnits + 1) * 30_000),
+            UnitType.TurretAntiInf,
+          ),
+          constructionDuration: this.instantBuild() ? 0 : 4 * 10,
+          maxHealth: 800,
+          damage: 150,
+        };
+        break;
+      case UnitType.TurretAntiNaval:
+        info = {
+          cost: this.costWrapper(
+            (numUnits: number) => Math.min(250_000, (numUnits + 1) * 50_000),
+            UnitType.TurretAntiNaval,
+          ),
+          constructionDuration: this.instantBuild() ? 0 : 5 * 10,
+          maxHealth: 1200,
+          damage: 200,
+        };
+        break;
+      // Phase 1: Economie
+      case UnitType.MineExtractor:
+        info = {
+          cost: this.costWrapper(
+            (numUnits: number) => Math.min(300_000, (numUnits + 1) * 60_000),
+            UnitType.MineExtractor,
+          ),
+          constructionDuration: this.instantBuild() ? 0 : 6 * 10,
+          maxHealth: 600,
+        };
+        break;
+      // Phase 1: Neutres
+      case UnitType.NeutralFort:
+        info = {
+          cost: () => 0n,
+          maxHealth: 2000,
+        };
+        break;
+      case UnitType.Capital:
+        info = {
+          cost: () => 0n,
+          maxHealth: 3000,
+        };
+        break;
+      case UnitType.SupplyCache:
+        info = {
+          cost: () => 0n,
+          maxHealth: 100,
+        };
+        break;
+      // Phase 1: Special
+      case UnitType.StratPort:
+        info = {
+          cost: this.costWrapper(
+            (numUnits: number) => Math.min(800_000, (numUnits + 1) * 150_000),
+            UnitType.StratPort,
+          ),
+          constructionDuration: this.instantBuild() ? 0 : 8 * 10,
+          maxHealth: 1800,
+          upgradable: true,
+        };
+        break;
+      // Phase 2: Terrestre
+      case UnitType.Tank:
+        info = {
+          cost: this.costWrapper(
+            (numUnits: number) => Math.min(400_000, (numUnits + 1) * 80_000),
+            UnitType.Tank,
+          ),
+          constructionDuration: this.instantBuild() ? 0 : 4 * 10,
+          maxHealth: 1100,
+          damage: 180,
+        };
+        break;
+      case UnitType.Artillery:
+        info = {
+          cost: this.costWrapper(
+            (numUnits: number) => Math.min(350_000, (numUnits + 1) * 70_000),
+            UnitType.Artillery,
+          ),
+          constructionDuration: this.instantBuild() ? 0 : 5 * 10,
+          maxHealth: 700,
+          damage: 220,
+        };
+        break;
+      // Phase 2: Aerien
+      case UnitType.AttackDrone:
+        info = {
+          cost: this.costWrapper(
+            (numUnits: number) => Math.min(200_000, (numUnits + 1) * 40_000),
+            UnitType.AttackDrone,
+          ),
+          constructionDuration: this.instantBuild() ? 0 : 3 * 10,
+          maxHealth: 400,
+          damage: 100,
+        };
+        break;
+      // Phase 3: Naval
+      case UnitType.Submarine:
+        info = {
+          cost: this.costWrapper(
+            (numUnits: number) => Math.min(600_000, (numUnits + 1) * 120_000),
+            UnitType.Submarine,
+          ),
+          constructionDuration: this.instantBuild() ? 0 : 7 * 10,
+          maxHealth: 900,
+          damage: 160,
+        };
+        break;
+      case UnitType.Destroyer:
+        info = {
+          cost: this.costWrapper(
+            (numUnits: number) => Math.min(800_000, (numUnits + 1) * 160_000),
+            UnitType.Destroyer,
+          ),
+          constructionDuration: this.instantBuild() ? 0 : 8 * 10,
+          maxHealth: 1300,
+          damage: 250,
+        };
+        break;
+      case UnitType.CarrierShip:
+        info = {
+          cost: this.costWrapper(
+            (numUnits: number) => Math.min(1_200_000, (numUnits + 1) * 250_000),
+            UnitType.CarrierShip,
+          ),
+          constructionDuration: this.instantBuild() ? 0 : 10 * 10,
+          maxHealth: 1600,
+          upgradable: true,
+        };
+        break;
+      // Phase 3: Detection
+      case UnitType.Radar:
+        info = {
+          cost: this.costWrapper(
+            (numUnits: number) => Math.min(500_000, (numUnits + 1) * 100_000),
+            UnitType.Radar,
+          ),
+          constructionDuration: this.instantBuild() ? 0 : 6 * 10,
+          maxHealth: 800,
+        };
+        break;
+      // Phase 4: Armes avancees
+      case UnitType.EMPLauncher:
+        info = {
+          cost: this.costWrapper(() => 3_000_000, UnitType.EMPLauncher),
+          constructionDuration: this.instantBuild() ? 0 : 15 * 10,
+        };
+        break;
+      case UnitType.CruiseMissile:
+        info = {
+          cost: this.costWrapper(() => 1_500_000, UnitType.CruiseMissile),
+          constructionDuration: this.instantBuild() ? 0 : 10 * 10,
+        };
+        break;
+      case UnitType.FragBomb:
+        info = {
+          cost: this.costWrapper(() => 2_000_000, UnitType.FragBomb),
+          constructionDuration: this.instantBuild() ? 0 : 12 * 10,
+        };
+        break;
+      case UnitType.ImpulseBomb:
+        info = {
+          cost: this.costWrapper(() => 2_500_000, UnitType.ImpulseBomb),
+          constructionDuration: this.instantBuild() ? 0 : 12 * 10,
+        };
+        break;
+      case UnitType.OrbitalLaser:
+        info = {
+          cost: this.costWrapper(() => 10_000_000, UnitType.OrbitalLaser),
+          constructionDuration: this.instantBuild() ? 0 : 20 * 10,
+        };
+        break;
       default:
         assertNever(type);
     }
@@ -635,8 +824,8 @@ export class DefaultConfig implements Config {
     defenderTroopLoss: number;
     tilesPerTickUsed: number;
   } {
-    let mag: number;
-    let speed: number;
+    let mag = 0;
+    let speed = 0;
     const type = gm.terrainType(tileToConquer);
     switch (type) {
       case TerrainType.Plains:

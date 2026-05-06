@@ -1193,6 +1193,11 @@ export class PlayerImpl implements Player {
         return this.nukeSpawn(targetTile, unitType);
       case UnitType.AtomBomb:
       case UnitType.HydrogenBomb:
+      case UnitType.EMPLauncher:
+      case UnitType.CruiseMissile:
+      case UnitType.FragBomb:
+      case UnitType.ImpulseBomb:
+      case UnitType.OrbitalLaser:
         return this.nukeSpawn(targetTile, unitType);
       case UnitType.MIRVWarhead:
         return targetTile;
@@ -1214,7 +1219,23 @@ export class PlayerImpl implements Player {
       case UnitType.SAMLauncher:
       case UnitType.City:
       case UnitType.Factory:
+      case UnitType.Bunker:
+      case UnitType.TurretAntiInf:
+      case UnitType.TurretAntiNaval:
+      case UnitType.MineExtractor:
+      case UnitType.NeutralFort:
+      case UnitType.Capital:
+      case UnitType.StratPort:
+      case UnitType.Tank:
+      case UnitType.Artillery:
+      case UnitType.AttackDrone:
+      case UnitType.Submarine:
+      case UnitType.Destroyer:
+      case UnitType.CarrierShip:
+      case UnitType.Radar:
         return this.landBasedStructureSpawn(targetTile, validTiles);
+      case UnitType.SupplyCache:
+        return this.landBasedUnitSpawn(targetTile);
       default:
         assertNever(unitType);
     }

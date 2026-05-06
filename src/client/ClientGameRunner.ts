@@ -237,7 +237,7 @@ async function createClientGame(
     userSettings,
     lobbyConfig.gameRecord !== undefined,
   );
-  let gameMap: TerrainMapData;
+  let gameMap: TerrainMapData | null = null;
 
   if (terrainLoad) {
     gameMap = await terrainLoad;

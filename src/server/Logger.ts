@@ -15,6 +15,11 @@ const config = getServerConfigFromServer();
 
 const resource = getOtelResource();
 
+// Initialize the OpenTelemetry Logger Provider
+const loggerProvider = new LoggerProvider({
+  resource,
+});
+
 if (config.otelEnabled()) {
   console.log("OTEL enabled");
   // Configure OpenTelemetry endpoint with basic auth (if provided)
@@ -26,11 +31,10 @@ if (config.otelEnabled()) {
     headers,
   });
 
-  // Initialize the OpenTelemetry Logger Provider
-  const loggerProvider = new LoggerProvider({
-    resource,
-    processors: [new SimpleLogRecordProcessor(logExporter)],
-  });
+  // Add a log processor with the exporter
+  loggerProvider.addLogRecordProcessor(
+    new SimpleLogRecordProcessor(logExporter),
+  );
 
   // Set as the global logger provider
   logsAPI.logs.setGlobalLoggerProvider(loggerProvider);

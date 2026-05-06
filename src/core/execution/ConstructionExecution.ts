@@ -1,13 +1,18 @@
 import { Execution, Game, Player, Tick, Unit, UnitType } from "../game/Game";
 import { TileRef } from "../game/GameMap";
+import { BunkerExecution } from "./BunkerExecution";
 import { CityExecution } from "./CityExecution";
 import { DefensePostExecution } from "./DefensePostExecution";
 import { FactoryExecution } from "./FactoryExecution";
+import { MineExtractorExecution } from "./MineExtractorExecution";
 import { MirvExecution } from "./MIRVExecution";
 import { MissileSiloExecution } from "./MissileSiloExecution";
 import { NukeExecution } from "./NukeExecution";
 import { PortExecution } from "./PortExecution";
 import { SAMLauncherExecution } from "./SAMLauncherExecution";
+import { StratPortExecution } from "./StratPortExecution";
+import { TurretAntiInfExecution } from "./TurretAntiInfExecution";
+import { TurretAntiNavalExecution } from "./TurretAntiNavalExecution";
 import { WarshipExecution } from "./WarshipExecution";
 
 export class ConstructionExecution implements Execution {
@@ -144,7 +149,21 @@ export class ConstructionExecution implements Execution {
       case UnitType.Factory:
         this.mg.addExecution(new FactoryExecution(this.structure!));
         break;
-      default:
+      case UnitType.Bunker:
+        this.mg.addExecution(new BunkerExecution(this.structure!));
+        break;
+      case UnitType.TurretAntiInf:
+        this.mg.addExecution(new TurretAntiInfExecution(this.structure!));
+        break;
+      case UnitType.TurretAntiNaval:
+        this.mg.addExecution(new TurretAntiNavalExecution(this.structure!));
+        break;
+      case UnitType.MineExtractor:
+        this.mg.addExecution(new MineExtractorExecution(this.structure!));
+        break;
+      case UnitType.StratPort:
+        this.mg.addExecution(new StratPortExecution(this.structure!));
+        break;
         console.warn(
           `unit type ${this.constructionType} cannot be constructed`,
         );
@@ -160,6 +179,11 @@ export class ConstructionExecution implements Execution {
       case UnitType.SAMLauncher:
       case UnitType.City:
       case UnitType.Factory:
+      case UnitType.Bunker:
+      case UnitType.TurretAntiInf:
+      case UnitType.TurretAntiNaval:
+      case UnitType.MineExtractor:
+      case UnitType.StratPort:
         return true;
       default:
         return false;

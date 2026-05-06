@@ -183,7 +183,7 @@ export class AiAttackBehavior {
         continue;
       }
 
-      let matchesCriteria: boolean;
+      let matchesCriteria = false;
       if (highInterestOnly) {
         // High-interest targeting: prioritize unowned tiles or tiles owned by bots
         matchesCriteria = !owner.isPlayer() || owner.type() === PlayerType.Bot;

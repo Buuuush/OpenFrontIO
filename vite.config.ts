@@ -5,6 +5,7 @@ import path from "path";
 import { fileURLToPath } from "url";
 import { defineConfig, loadEnv, type Plugin } from "vite";
 import { createHtmlPlugin } from "vite-plugin-html";
+import tsconfigPaths from "vite-tsconfig-paths";
 import {
   type AssetManifest,
   buildAssetUrl,
@@ -154,13 +155,17 @@ export default defineConfig(({ mode }) => {
     publicDir: isProduction ? false : "resources",
 
     resolve: {
-      tsconfigPaths: true,
       alias: {
+        "protobufjs/minimal": path.resolve(
+          __dirname,
+          "node_modules/protobufjs/minimal.js",
+        ),
         resources: path.resolve(__dirname, "resources"),
       },
     },
 
     plugins: [
+      tsconfigPaths(),
       ...(!isProduction
         ? [serveProprietaryDir(proprietaryDir, resourcesDir)]
         : []),
@@ -204,11 +209,8 @@ export default defineConfig(({ mode }) => {
       assetsDir: "assets", // Sub-directory for assets
       rollupOptions: {
         output: {
-          manualChunks: (id) => {
-            const vendorModules = ["pixi.js", "howler", "zod"];
-            if (vendorModules.some((module) => id.includes(module))) {
-              return "vendor";
-            }
+          manualChunks: {
+            vendor: ["pixi.js", "howler", "zod", "protobufjs"],
           },
         },
       },

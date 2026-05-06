@@ -489,7 +489,7 @@ export class SpriteFactory {
     if (stage === undefined) throw new Error("Not initialized");
     const parentContainer = new PIXI.Container();
     const circle = new PIXI.Graphics();
-    let radius: number;
+    let radius = 0;
     switch (type) {
       case UnitType.SAMLauncher:
         radius = this.game.config().samRange(level ?? 1);

@@ -37,6 +37,11 @@ const atomBombIcon = assetUrl("images/NukeIconWhite.svg");
 const portIcon = assetUrl("images/PortIcon.svg");
 const samlauncherIcon = assetUrl("images/SamLauncherIconWhite.svg");
 const shieldIcon = assetUrl("images/ShieldIconWhite.svg");
+// Phase 1 icons (reusing existing temporarily)
+const bunkerIcon = shieldIcon;
+const turretIcon = assetUrl("images/SamLauncherIconWhite.svg");
+const mineIcon = factoryIcon;
+const stratPortIcon = portIcon;
 
 export interface BuildItemDisplay {
   unitType: PlayerBuildableUnitType;
@@ -116,6 +121,44 @@ export const buildTable: BuildItemDisplay[][] = [
       icon: factoryIcon,
       description: "build_menu.desc.factory",
       key: "unit_type.factory",
+      countable: true,
+    },
+  ],
+  // Phase 1 Structures
+  [
+    {
+      unitType: UnitType.Bunker,
+      icon: bunkerIcon,
+      description: "build_menu.desc.bunker",
+      key: "unit_type.bunker",
+      countable: true,
+    },
+    {
+      unitType: UnitType.TurretAntiInf,
+      icon: turretIcon,
+      description: "build_menu.desc.turret_anti_inf",
+      key: "unit_type.turret_anti_inf",
+      countable: true,
+    },
+    {
+      unitType: UnitType.TurretAntiNaval,
+      icon: turretIcon,
+      description: "build_menu.desc.turret_anti_naval",
+      key: "unit_type.turret_anti_naval",
+      countable: true,
+    },
+    {
+      unitType: UnitType.MineExtractor,
+      icon: mineIcon,
+      description: "build_menu.desc.mine_extractor",
+      key: "unit_type.mine_extractor",
+      countable: true,
+    },
+    {
+      unitType: UnitType.StratPort,
+      icon: stratPortIcon,
+      description: "build_menu.desc.strat_port",
+      key: "unit_type.strat_port",
       countable: true,
     },
   ],

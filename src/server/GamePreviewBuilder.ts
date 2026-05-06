@@ -210,7 +210,7 @@ export async function buildPreview(
       ? `${mode} on ${map}${gameTypeLabel}`
       : "OpenFront Game";
 
-  let description: string;
+  let description = "";
   if (isFinished) {
     const parts: string[] = [];
     if (winner) {

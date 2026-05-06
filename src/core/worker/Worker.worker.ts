@@ -50,7 +50,7 @@ async function drain(): Promise<void> {
 
   draining = true;
   drainRequested = false;
-  let shouldContinue: boolean;
+  let shouldContinue = false;
   try {
     const gr = await gameRunner;
     if (!gr) {

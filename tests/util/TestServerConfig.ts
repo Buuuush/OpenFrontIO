@@ -7,6 +7,9 @@ export class TestServerConfig implements ServerConfig {
   turnstileSiteKey(): string {
     throw new Error("Method not implemented.");
   }
+  turnstileSecretKey(): string {
+    throw new Error("Method not implemented.");
+  }
   apiKey(): string {
     throw new Error("Method not implemented.");
   }

@@ -169,7 +169,6 @@ export enum GameMapType {
   Antarctica = "Antarctica",
   ArchipelagoSea = "ArchipelagoSea",
   BajaCalifornia = "Baja California",
-  MiddleEast = "Middle East",
 }
 
 export type GameMapName = keyof typeof GameMapType;
@@ -231,7 +230,6 @@ export const mapCategories: Record<string, GameMapType[]> = {
     GameMapType.BeringSea,
     GameMapType.ArchipelagoSea,
     GameMapType.BajaCalifornia,
-    GameMapType.MiddleEast,
   ],
   fantasy: [
     GameMapType.Pangaea,
@@ -337,6 +335,35 @@ export enum UnitType {
   MIRVWarhead = "MIRV Warhead",
   Train = "Train",
   Factory = "Factory",
+  // Phase 1: Structures défensives
+  Bunker = "Bunker",
+  TurretAntiInf = "Turret Anti-Infantry",
+  TurretAntiNaval = "Turret Anti-Naval",
+  // Phase 1: Économie
+  MineExtractor = "Mine",
+  // Phase 1: Neutres
+  NeutralFort = "Neutral Fort",
+  Capital = "Capital",
+  SupplyCache = "Supply Cache",
+  // Phase 1: Spécial
+  StratPort = "Strategic Port",
+  // Phase 2: Terrestre
+  Tank = "Tank",
+  Artillery = "Artillery",
+  // Phase 2: Aérien
+  AttackDrone = "Attack Drone",
+  // Phase 3: Naval
+  Submarine = "Submarine",
+  Destroyer = "Destroyer",
+  CarrierShip = "Carrier Ship",
+  // Phase 3: Détection
+  Radar = "Radar",
+  // Phase 4: Armes avancées
+  EMPLauncher = "EMP Launcher",
+  CruiseMissile = "Cruise Missile",
+  FragBomb = "Frag Bomb",
+  ImpulseBomb = "Impulse Bomb",
+  OrbitalLaser = "Orbital Laser",
 }
 
 export enum TrainType {
@@ -357,6 +384,13 @@ export const BuildableAttacks = unitTypeGroup([
   UnitType.HydrogenBomb,
   UnitType.MIRV,
   UnitType.Warship,
+  UnitType.Tank,
+  UnitType.Artillery,
+  UnitType.AttackDrone,
+  UnitType.Submarine,
+  UnitType.EMPLauncher,
+  UnitType.CruiseMissile,
+  UnitType.OrbitalLaser,
 ] as const);
 
 export const Structures = unitTypeGroup([
@@ -366,16 +400,28 @@ export const Structures = unitTypeGroup([
   UnitType.MissileSilo,
   UnitType.Port,
   UnitType.Factory,
+  UnitType.Bunker,
+  UnitType.TurretAntiInf,
+  UnitType.TurretAntiNaval,
+  UnitType.MineExtractor,
+  UnitType.NeutralFort,
+  UnitType.Capital,
+  UnitType.StratPort,
+  UnitType.Radar,
+  UnitType.EMPLauncher,
 ] as const);
 
 export const BuildMenus = unitTypeGroup([
   ...Structures.types,
   ...BuildableAttacks.types,
+  UnitType.Destroyer,
+  UnitType.CarrierShip,
 ] as const);
 
 export const PlayerBuildable = unitTypeGroup([
   ...BuildMenus.types,
   UnitType.TransportShip,
+  UnitType.SupplyCache,
 ] as const);
 
 export type PlayerBuildableUnitType = (typeof PlayerBuildable.types)[number];
@@ -440,6 +486,54 @@ export interface UnitParamsMap {
   };
 
   [UnitType.MIRVWarhead]: {
+    targetTile?: number;
+  };
+
+  // Phase 1: Structures defensives
+  [UnitType.Bunker]: Record<string, never>;
+  [UnitType.TurretAntiInf]: Record<string, never>;
+  [UnitType.TurretAntiNaval]: Record<string, never>;
+
+  // Phase 1: Economie
+  [UnitType.MineExtractor]: Record<string, never>;
+
+  // Phase 1: Neutres
+  [UnitType.NeutralFort]: Record<string, never>;
+  [UnitType.Capital]: Record<string, never>;
+  [UnitType.SupplyCache]: Record<string, never>;
+
+  // Phase 1: Special
+  [UnitType.StratPort]: Record<string, never>;
+
+  // Phase 2: Terrestre
+  [UnitType.Tank]: Record<string, never>;
+  [UnitType.Artillery]: Record<string, never>;
+
+  // Phase 2: Aerien
+  [UnitType.AttackDrone]: Record<string, never>;
+
+  // Phase 3: Naval
+  [UnitType.Submarine]: Record<string, never>;
+  [UnitType.Destroyer]: Record<string, never>;
+  [UnitType.CarrierShip]: Record<string, never>;
+
+  // Phase 3: Detection
+  [UnitType.Radar]: Record<string, never>;
+
+  // Phase 4: Armes avancees
+  [UnitType.EMPLauncher]: {
+    targetTile?: number;
+  };
+  [UnitType.CruiseMissile]: {
+    targetTile?: number;
+  };
+  [UnitType.FragBomb]: {
+    targetTile?: number;
+  };
+  [UnitType.ImpulseBomb]: {
+    targetTile?: number;
+  };
+  [UnitType.OrbitalLaser]: {
     targetTile?: number;
   };
 }
