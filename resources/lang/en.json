@@ -664,7 +664,10 @@
     "turret_anti_inf": "Anti-Infantry Turret",
     "turret_anti_naval": "Anti-Naval Turret",
     "mine_extractor": "Mine Extractor",
-    "strat_port": "Strategic Port"
+    "strat_port": "Strategic Port",
+    "tank": "Tank",
+    "artillery": "Artillery",
+    "attack_drone": "Attack Drone"
   },
   "user_setting": {
     "title": "Settings",
@@ -892,7 +895,10 @@
       "turret_anti_inf": "Defends against land-based enemy units",
       "turret_anti_naval": "Defends against enemy ships",
       "mine_extractor": "Generates gold passively over time",
-      "strat_port": "Strategic trading hub for naval commerce"
+      "strat_port": "Strategic trading hub for naval commerce",
+      "tank": "Ground combat unit with good armor and firepower",
+      "artillery": "Long-range ground unit with high damage",
+      "attack_drone": "Fast aerial unit for quick strikes"
     },
     "warship_shift_hint": "Hold Shift and drag to select multiple warships at once",
     "not_enough_money": "Not enough money"

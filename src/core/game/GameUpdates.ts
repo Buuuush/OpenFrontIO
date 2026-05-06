@@ -12,6 +12,7 @@ import {
   TrainType,
   TransportShipState,
   UnitType,
+  VisibilityState,
   WarshipState,
 } from "./Game";
 import { TileRef } from "./GameMap";
@@ -141,6 +142,7 @@ export interface UnitUpdate {
   reachedTarget: boolean;
   warshipState?: WarshipState;
   transportShipState?: TransportShipState;
+  visibilityState?: VisibilityState;
   targetable: boolean;
   markedForDeletion: number | false;
   targetUnitId?: number; // Only for trade ships

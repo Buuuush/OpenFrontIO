@@ -43,6 +43,11 @@ const turretIcon = assetUrl("images/SamLauncherIconWhite.svg");
 const mineIcon = factoryIcon;
 const stratPortIcon = portIcon;
 
+// Phase 2 icons (reusing existing temporarily)
+const tankIcon = shieldIcon;
+const artilleryIcon = assetUrl("images/SamLauncherIconWhite.svg");
+const droneIcon = warshipIcon;
+
 export interface BuildItemDisplay {
   unitType: PlayerBuildableUnitType;
   icon: string;
@@ -159,6 +164,30 @@ export const buildTable: BuildItemDisplay[][] = [
       icon: stratPortIcon,
       description: "build_menu.desc.strat_port",
       key: "unit_type.strat_port",
+      countable: true,
+    },
+  ],
+  // Phase 2 Units
+  [
+    {
+      unitType: UnitType.Tank,
+      icon: tankIcon,
+      description: "build_menu.desc.tank",
+      key: "unit_type.tank",
+      countable: true,
+    },
+    {
+      unitType: UnitType.Artillery,
+      icon: artilleryIcon,
+      description: "build_menu.desc.artillery",
+      key: "unit_type.artillery",
+      countable: true,
+    },
+    {
+      unitType: UnitType.AttackDrone,
+      icon: droneIcon,
+      description: "build_menu.desc.attack_drone",
+      key: "unit_type.attack_drone",
       countable: true,
     },
   ],

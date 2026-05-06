@@ -39,6 +39,11 @@ export type TransportShipState = {
   troops: number;
 };
 
+export type VisibilityState = {
+  isSubmerged: boolean;
+  radarDetected: boolean;
+};
+
 export const AllPlayers = "AllPlayers" as const;
 
 // export type GameUpdates = Record<GameUpdateType, GameUpdate[]>;
@@ -730,6 +735,9 @@ export interface Unit {
   updateWarshipState(update: Partial<WarshipState>): void;
   transportShipState(): TransportShipState;
   updateTransportShipState(update: Partial<TransportShipState>): void;
+  visibilityState(): VisibilityState;
+  updateVisibilityState(update: Partial<VisibilityState>): void;
+  isVisibleTo(observer: Player): boolean;
   health(): number;
   modifyHealth(delta: number, attacker?: Player): void;
 

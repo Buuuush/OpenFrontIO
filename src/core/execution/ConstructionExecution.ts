@@ -9,11 +9,18 @@ import { MirvExecution } from "./MIRVExecution";
 import { MissileSiloExecution } from "./MissileSiloExecution";
 import { NukeExecution } from "./NukeExecution";
 import { PortExecution } from "./PortExecution";
+import { RadarExecution } from "./RadarExecution";
 import { SAMLauncherExecution } from "./SAMLauncherExecution";
 import { StratPortExecution } from "./StratPortExecution";
+import { SubmarineExecution } from "./SubmarineExecution";
+import { DestroyerExecution } from "./DestroyerExecution";
+import { CarrierShipExecution } from "./CarrierShipExecution";
 import { TurretAntiInfExecution } from "./TurretAntiInfExecution";
 import { TurretAntiNavalExecution } from "./TurretAntiNavalExecution";
 import { WarshipExecution } from "./WarshipExecution";
+import { TankExecution } from "./TankExecution";
+import { ArtilleryExecution } from "./ArtilleryExecution";
+import { AttackDroneExecution } from "./AttackDroneExecution";
 
 export class ConstructionExecution implements Execution {
   private structure: Unit | null = null;
@@ -164,6 +171,28 @@ export class ConstructionExecution implements Execution {
       case UnitType.StratPort:
         this.mg.addExecution(new StratPortExecution(this.structure!));
         break;
+      case UnitType.Submarine:
+        this.mg.addExecution(new SubmarineExecution(this.structure!));
+        break;
+      case UnitType.Destroyer:
+        this.mg.addExecution(new DestroyerExecution(this.structure!));
+        break;
+      case UnitType.CarrierShip:
+        this.mg.addExecution(new CarrierShipExecution(this.structure!));
+        break;
+      case UnitType.Radar:
+        this.mg.addExecution(new RadarExecution(this.structure!));
+        break;
+      case UnitType.Tank:
+        this.mg.addExecution(new TankExecution(this.structure!));
+        break;
+      case UnitType.Artillery:
+        this.mg.addExecution(new ArtilleryExecution(this.structure!));
+        break;
+      case UnitType.AttackDrone:
+        this.mg.addExecution(new AttackDroneExecution(this.structure!));
+        break;
+      default:
         console.warn(
           `unit type ${this.constructionType} cannot be constructed`,
         );
@@ -184,6 +213,13 @@ export class ConstructionExecution implements Execution {
       case UnitType.TurretAntiNaval:
       case UnitType.MineExtractor:
       case UnitType.StratPort:
+      case UnitType.Tank:
+      case UnitType.Artillery:
+      case UnitType.AttackDrone:
+      case UnitType.Submarine:
+      case UnitType.Destroyer:
+      case UnitType.CarrierShip:
+      case UnitType.Radar:
         return true;
       default:
         return false;

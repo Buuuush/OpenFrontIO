@@ -10,6 +10,7 @@ import {
   Unit,
   UnitInfo,
   UnitType,
+  VisibilityState,
   WarshipState,
 } from "./Game";
 import { GameImpl } from "./GameImpl";
@@ -25,6 +26,7 @@ export class UnitImpl implements Unit {
   private _lastTile: TileRef;
   private _transportShipState: TransportShipState | undefined = undefined;
   private _warshipState: WarshipState | undefined = undefined;
+  private _visibilityState: VisibilityState | undefined = undefined;
   private _targetedBySAM = false;
   private _reachedTarget = false;
   private _wasDestroyedByEnemy: boolean = false;
@@ -71,6 +73,16 @@ export class UnitImpl implements Unit {
         state: "patrolling",
         patrolTile: params.patrolTile,
         lastCombatTick: -100,
+      };
+    }
+    // Phase 3: Naval unit visibility state
+    if (this._type === UnitType.Submarine || 
+        this._type === UnitType.Destroyer || 
+        this._type === UnitType.CarrierShip || 
+        this._type === UnitType.Radar) {
+      this._visibilityState = {
+        isSubmerged: this._type === UnitType.Submarine, // Submarines start submerged
+        radarDetected: false,
       };
     }
     this._targetUnit =
@@ -137,6 +149,10 @@ export class UnitImpl implements Unit {
       transportShipState:
         this._transportShipState !== undefined
           ? this.transportShipState()
+          : undefined,
+      visibilityState:
+        this._visibilityState !== undefined
+          ? { ...this.visibilityState() }
           : undefined,
       pos: this._tile,
       markedForDeletion: this._deletionAt ?? false,
@@ -569,5 +585,45 @@ export class UnitImpl implements Unit {
       this._loaded = loaded;
       this.mg.addUpdate(this.toUpdate());
     }
+  }
+
+  visibilityState(): VisibilityState {
+    if (this._visibilityState === undefined) {
+      return { isSubmerged: false, radarDetected: false };
+    }
+    return { ...this._visibilityState };
+  }
+
+  updateVisibilityState(update: Partial<VisibilityState>): void {
+    if (this._visibilityState === undefined) {
+      this._visibilityState = { isSubmerged: false, radarDetected: false };
+    }
+    let changed = false;
+    if (
+      update.isSubmerged !== undefined &&
+      this._visibilityState.isSubmerged !== update.isSubmerged
+    ) {
+      this._visibilityState.isSubmerged = update.isSubmerged;
+      changed = true;
+    }
+    if (
+      update.radarDetected !== undefined &&
+      this._visibilityState.radarDetected !== update.radarDetected
+    ) {
+      this._visibilityState.radarDetected = update.radarDetected;
+      changed = true;
+    }
+    if (changed) {
+      this.mg.addUpdate(this.toUpdate());
+    }
+  }
+
+  isVisibleTo(observer: Player): boolean {
+    // If unit is submerged, it's only visible if radar-detected
+    if (this._visibilityState?.isSubmerged) {
+      return this._visibilityState.radarDetected;
+    }
+    // Default visibility: visible to all
+    return true;
   }
 }
