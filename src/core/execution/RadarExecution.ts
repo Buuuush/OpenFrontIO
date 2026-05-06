@@ -22,7 +22,7 @@ export class RadarExecution implements Execution {
     this.mg = mg;
 
     // Initial delay before first scan
-    const scanInterval = this.mg.config().radarScanInterval() ?? 120; // Default 2 seconds at 60fps
+    const scanInterval = this.mg.config().radarScanInterval();
     this.ticksUntilNextScan = Math.floor(scanInterval * 0.5); // Start scanning after half the interval
   }
 
@@ -46,7 +46,7 @@ export class RadarExecution implements Execution {
       this.scanForSubmarines();
 
       // Reset timer for next scan
-      const scanInterval = this.mg.config().radarScanInterval() ?? 120;
+      const scanInterval = this.mg.config().radarScanInterval();
       this.ticksUntilNextScan = scanInterval;
     }
   }
@@ -54,7 +54,7 @@ export class RadarExecution implements Execution {
   private scanForSubmarines(): void {
     if (!this.mg) return;
 
-    const radarRange = this.mg.config().radarDetectionRange() ?? 10; // Default 10 tiles
+    const radarRange = this.mg.config().radarDetectionRange();
     const radarTile = this.radar.tile();
 
     // Find all submarines within radar range
