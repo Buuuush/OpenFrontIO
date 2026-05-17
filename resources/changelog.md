@@ -2,6 +2,11 @@
 - This file will be replaced with real release notes during the release build process.
   - Indented bullets look like this
 
+## Unreleased (branch: feature/ai-structure-tests-icons) — 2026-05-17
+
+- Add deterministic AI structure behavior tests for `Radar` and `EMPLauncher`.
+- Polish `BuildMenu` icons for Submarine, Destroyer, Carrier, Radar and EMP.
+
 📦 **OpenFront v24 Changelog**
 
 ⚖️ **Balance Changes**
