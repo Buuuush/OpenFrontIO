@@ -47,6 +47,16 @@ const stratPortIcon = portIcon;
 const tankIcon = shieldIcon;
 const artilleryIcon = assetUrl("images/SamLauncherIconWhite.svg");
 const droneIcon = warshipIcon;
+// Phase 3/4 icons (improved choices)
+const submarineIcon = assetUrl("images/BoatIconWhite.svg");
+const destroyerIcon = assetUrl("images/DestroyerIconWhite.svg");
+const carrierIcon = assetUrl("images/BattleshipIconWhite.svg");
+const radarIcon = assetUrl("images/TargetIconWhite.svg");
+const empIcon = assetUrl("images/PlutoniumIcon.svg");
+const cruiseIcon = mirvIcon;
+const orbitalIcon = hydrogenBombIcon;
+const fragBombIcon = missileSiloIcon;
+const impulseBombIcon = shieldIcon;
 
 export interface BuildItemDisplay {
   unitType: PlayerBuildableUnitType;
@@ -189,6 +199,75 @@ export const buildTable: BuildItemDisplay[][] = [
       description: "build_menu.desc.attack_drone",
       key: "unit_type.attack_drone",
       countable: true,
+    },
+  ],
+  // Phase 3: Naval & Detection
+  [
+    {
+      unitType: UnitType.Submarine,
+      icon: submarineIcon,
+      description: "build_menu.desc.submarine",
+      key: "unit_type.submarine",
+      countable: true,
+    },
+    {
+      unitType: UnitType.Destroyer,
+      icon: destroyerIcon,
+      description: "build_menu.desc.destroyer",
+      key: "unit_type.destroyer",
+      countable: true,
+    },
+    {
+      unitType: UnitType.CarrierShip,
+      icon: carrierIcon,
+      description: "build_menu.desc.carrier_ship",
+      key: "unit_type.carrier_ship",
+      countable: true,
+    },
+    {
+      unitType: UnitType.Radar,
+      icon: radarIcon,
+      description: "build_menu.desc.radar",
+      key: "unit_type.radar",
+      countable: true,
+    },
+  ],
+  // Phase 4: Advanced Weapons
+  [
+    {
+      unitType: UnitType.EMPLauncher,
+      icon: empIcon,
+      description: "build_menu.desc.emp_launcher",
+      key: "unit_type.emp_launcher",
+      countable: true,
+    },
+    {
+      unitType: UnitType.CruiseMissile,
+      icon: cruiseIcon,
+      description: "build_menu.desc.cruise_missile",
+      key: "unit_type.cruise_missile",
+      countable: false,
+    },
+    {
+      unitType: UnitType.OrbitalLaser,
+      icon: orbitalIcon,
+      description: "build_menu.desc.orbital_laser",
+      key: "unit_type.orbital_laser",
+      countable: false,
+    },
+    {
+      unitType: UnitType.FragBomb,
+      icon: fragBombIcon,
+      description: "build_menu.desc.frag_bomb",
+      key: "unit_type.frag_bomb",
+      countable: false,
+    },
+    {
+      unitType: UnitType.ImpulseBomb,
+      icon: impulseBombIcon,
+      description: "build_menu.desc.impulse_bomb",
+      key: "unit_type.impulse_bomb",
+      countable: false,
     },
   ],
 ];

@@ -1,9 +1,83 @@
 import { vi } from "vitest";
 import { ConstructionExecution } from "../src/core/execution/ConstructionExecution";
 import { NationStructureBehavior } from "../src/core/execution/nation/NationStructureBehavior";
-import { Difficulty, PlayerType } from "../src/core/game/Game";
+import {
+  Difficulty,
+  PlayerInfo,
+  PlayerType,
+  UnitType,
+} from "../src/core/game/Game";
 import { Cluster } from "../src/core/game/TrainStation";
 import { PseudoRandom } from "../src/core/PseudoRandom";
+import { setup } from "./util/Setup";
+
+describe("NationStructureBehavior (ratios)", () => {
+  test("Radar: should build when target > owned (medium difficulty)", async () => {
+    const game = await setup("big_plains", {
+      infiniteGold: true,
+      instantBuild: true,
+    });
+
+    const nationInfo = new PlayerInfo(
+      "nation_radar",
+      PlayerType.Nation,
+      null,
+      "nation_radar",
+    );
+    game.addPlayer(nationInfo);
+    const nation = game.player("nation_radar");
+
+    const behavior = new (
+      await import("../src/core/execution/nation/NationStructureBehavior")
+    ).NationStructureBehavior(new PseudoRandom(42), game, nation);
+
+    // Medium difficulty: radar ratio per city = 0.15
+    // With cityCount = 10 -> target = floor(10 * 0.15) = 1
+    const should = (behavior as any).shouldBuildStructure(
+      UnitType.Radar,
+      10,
+      false,
+    );
+    expect(should).toBe(true);
+  });
+
+  test("EMPLauncher: respects low ratio and requires many cities to target one", async () => {
+    const game = await setup("big_plains", {
+      infiniteGold: true,
+      instantBuild: true,
+    });
+
+    const nationInfo = new PlayerInfo(
+      "nation_emp",
+      PlayerType.Nation,
+      null,
+      "nation_emp",
+    );
+    game.addPlayer(nationInfo);
+    const nation = game.player("nation_emp");
+
+    const behavior = new (
+      await import("../src/core/execution/nation/NationStructureBehavior")
+    ).NationStructureBehavior(new PseudoRandom(42), game, nation);
+
+    // Medium difficulty: EMP ratio per city = 0.03
+    // With cityCount = 10 -> target = floor(10 * 0.03) = 0
+    const shouldLow = (behavior as any).shouldBuildStructure(
+      UnitType.EMPLauncher,
+      10,
+      false,
+    );
+    expect(shouldLow).toBe(false);
+
+    // With cityCount = 34 -> target = floor(34 * 0.03) = 1
+    const shouldHigh = (behavior as any).shouldBuildStructure(
+      UnitType.EMPLauncher,
+      34,
+      false,
+    );
+    expect(shouldHigh).toBe(true);
+  });
+});
 
 // ── Fixed trade-gold values matching DefaultConfig ──────────────────────────
 
